@@ -81,7 +81,6 @@ class _CustomScaffoldState extends State<CustomScaffold> {
       onItemSelected: (index) {
         setState(() => _index = index);
         _key.currentState.maybePop();
-        widget.onItemTap(index);
       },
       backgroundColor: b.backgroundColor,
       iconSize: b.iconSize,
