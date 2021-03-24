@@ -1,3 +1,4 @@
+import 'package:bottom_navy_bar/bottom_navy_bar.dart';
 import 'package:custom_navigator/custom_navigator.dart';
 import 'package:flutter/material.dart';
 
@@ -73,33 +74,17 @@ class _CustomScaffoldState extends State<CustomScaffold> {
   }
 
   _bottomNavBar() {
-    assert(widget.scaffold.bottomNavigationBar != null);
-
-    BottomNavigationBar b = widget.scaffold.bottomNavigationBar;
-    return BottomNavigationBar(
+    BottomNavyBar b = widget.scaffold.bottomNavigationBar;
+    return BottomNavyBar(
       key: b.key,
       items: b.items,
-      currentIndex: _index,
-      onTap: (index) {
+      onItemSelected: (index) {
         setState(() => _index = index);
         _key.currentState.maybePop();
         widget.onItemTap(index);
       },
       backgroundColor: b.backgroundColor,
-      elevation: b.elevation,
-      fixedColor: b.selectedItemColor == null ? b.fixedColor : null,
       iconSize: b.iconSize,
-      selectedFontSize: b.selectedFontSize,
-      selectedIconTheme: b.selectedIconTheme,
-      selectedItemColor: b.selectedItemColor,
-      selectedLabelStyle: b.selectedLabelStyle,
-      showSelectedLabels: b.showSelectedLabels,
-      showUnselectedLabels: b.showUnselectedLabels,
-      type: b.type,
-      unselectedFontSize: b.unselectedFontSize,
-      unselectedIconTheme: b.unselectedIconTheme,
-      unselectedItemColor: b.unselectedItemColor,
-      unselectedLabelStyle: b.unselectedLabelStyle,
     );
   }
 }
