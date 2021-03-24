@@ -28,14 +28,6 @@ class CustomScaffold extends StatefulWidget {
       : assert(scaffold != null),
         assert(children != null),
         assert(scaffold.bottomNavigationBar != null),
-        assert(scaffold.bottomNavigationBar is BottomNavigationBar,
-            '[CustomScaffold] require an instance of [BottomNavigationBar]'),
-        assert(
-            (scaffold.bottomNavigationBar as BottomNavigationBar)
-                    .items
-                    .length ==
-                children.length,
-            '[BottomNavigationBar] and `children` should be the same size'),
         super(key: key);
 
   @override
