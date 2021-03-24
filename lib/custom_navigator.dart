@@ -1,4 +1,3 @@
-
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 
@@ -65,6 +64,11 @@ class _CustomNavigatorState extends State<CustomNavigator>
       _navigator = widget.navigatorKey ?? GlobalObjectKey<NavigatorState>(this);
 
   @override
+  Future<bool> didPushRouteInformation(RouteInformation routeInformation) {
+    return didPushRoute(routeInformation.location);
+  }
+
+  @override
   void initState() {
     _setNavigator();
     WidgetsBinding.instance.addObserver(this);
@@ -79,10 +83,10 @@ class _CustomNavigatorState extends State<CustomNavigator>
       // intentionally via `setInitialRoute`, and should override whatever
       // is in [widget.initialRoute].
       initialRoute: WidgetsBinding.instance.window.defaultRouteName !=
-          Navigator.defaultRouteName
+              Navigator.defaultRouteName
           ? WidgetsBinding.instance.window.defaultRouteName
           : widget.initialRoute ??
-          WidgetsBinding.instance.window.defaultRouteName,
+              WidgetsBinding.instance.window.defaultRouteName,
       onGenerateRoute: _onGenerateRoute,
       onUnknownRoute: _onUnknownRoute,
       observers: widget.navigatorObservers,
@@ -131,21 +135,21 @@ class _CustomNavigatorState extends State<CustomNavigator>
   Route<dynamic> _onGenerateRoute(RouteSettings settings) {
     final String name = settings.name;
     final WidgetBuilder pageContentBuilder =
-    name == Navigator.defaultRouteName && widget.home != null
-        ? (BuildContext context) => widget.home
-        : widget.routes[name];
+        name == Navigator.defaultRouteName && widget.home != null
+            ? (BuildContext context) => widget.home
+            : widget.routes[name];
 
     if (pageContentBuilder != null) {
       assert(
-      widget.pageRoute != null,
-      'The default onGenerateRoute handler for CustomNavigator must have a '
+          widget.pageRoute != null,
+          'The default onGenerateRoute handler for CustomNavigator must have a '
           'pageRoute set if the home or routes properties are set.');
       final Route<dynamic> route = widget.pageRoute<dynamic>(
         settings,
         pageContentBuilder,
       );
       assert(route != null,
-      'The pageRouteBuilder for CustomNavigator must return a valid non-null Route.');
+          'The pageRouteBuilder for CustomNavigator must return a valid non-null Route.');
       return route;
     }
     if (widget.onGenerateRoute != null) return widget.onGenerateRoute(settings);
@@ -157,14 +161,14 @@ class _CustomNavigatorState extends State<CustomNavigator>
       if (widget.onUnknownRoute == null) {
         throw FlutterError(
             'Could not find a generator for route $settings in the $runtimeType.\n'
-                'Generators for routes are searched for in the following order:\n'
-                ' 1. For the "/" route, the "home" property, if non-null, is used.\n'
-                ' 2. Otherwise, the "routes" table is used, if it has an entry for '
-                'the route.\n'
-                ' 3. Otherwise, onGenerateRoute is called. It should return a '
-                'non-null value for any valid route not handled by "home" and "routes".\n'
-                ' 4. Finally if all else fails onUnknownRoute is called.\n'
-                'Unfortunately, onUnknownRoute was not set.');
+            'Generators for routes are searched for in the following order:\n'
+            ' 1. For the "/" route, the "home" property, if non-null, is used.\n'
+            ' 2. Otherwise, the "routes" table is used, if it has an entry for '
+            'the route.\n'
+            ' 3. Otherwise, onGenerateRoute is called. It should return a '
+            'non-null value for any valid route not handled by "home" and "routes".\n'
+            ' 4. Finally if all else fails onUnknownRoute is called.\n'
+            'Unfortunately, onUnknownRoute was not set.');
       }
       return true;
     }());
@@ -184,9 +188,9 @@ class _CustomNavigatorState extends State<CustomNavigator>
 
 class PageRoutes {
   static final materialPageRoute =
-  <T>(RouteSettings settings, WidgetBuilder builder) =>
-      MaterialPageRoute<T>(settings: settings, builder: builder);
+      <T>(RouteSettings settings, WidgetBuilder builder) =>
+          MaterialPageRoute<T>(settings: settings, builder: builder);
   static final cupertinoPageRoute =
-  <T>(RouteSettings settings, WidgetBuilder builder) =>
-      CupertinoPageRoute<T>(settings: settings, builder: builder);
+      <T>(RouteSettings settings, WidgetBuilder builder) =>
+          CupertinoPageRoute<T>(settings: settings, builder: builder);
 }
