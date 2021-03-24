@@ -74,16 +74,13 @@ class _CustomScaffoldState extends State<CustomScaffold> {
   }
 
   _bottomNavBar() {
-    BottomNavyBar b = widget.scaffold.bottomNavigationBar;
     return BottomNavyBar(
-      key: b.key,
-      items: b.items,
+      items: [],
+      selectedIndex: _index,
       onItemSelected: (index) {
         setState(() => _index = index);
         _key.currentState.maybePop();
       },
-      backgroundColor: b.backgroundColor,
-      iconSize: b.iconSize,
     );
   }
 }
